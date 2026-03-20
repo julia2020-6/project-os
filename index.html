@@ -47,19 +47,30 @@ body{background:var(--bg);color:var(--ink);font-family:'Outfit',sans-serif;font-
 /* AUTH SCREEN */
 #auth-screen{position:fixed;inset:0;background:var(--bg);z-index:700;display:flex;align-items:center;justify-content:center;}
 #auth-screen.hide{display:none;}
-.auth-box{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:32px;width:380px;max-width:94vw;box-shadow:var(--shm);}
-.auth-logo{display:flex;align-items:center;gap:9px;margin-bottom:22px;}
-.auth-mark{width:32px;height:32px;background:var(--ora);border-radius:7px;display:flex;align-items:center;justify-content:center;}
-.auth-mark svg{width:17px;height:17px;}
-.auth-brand{font-family:'Fraunces',serif;font-size:16px;font-weight:700;}
+.auth-wrap{width:480px;max-width:95vw;}
+.auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:22px;justify-content:center;}
+.auth-mark{width:36px;height:36px;background:var(--ora);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.auth-mark svg{width:18px;height:18px;}
+.auth-brand{font-family:'Fraunces',serif;font-size:18px;font-weight:700;}
 .auth-brand small{display:block;font-size:9.5px;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase;font-family:'Outfit',sans-serif;}
-.auth-tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:18px;}
-.auth-tab{flex:1;text-align:center;padding:8px;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--ink3);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .13s;}
-.auth-tab.act{color:var(--ora);border-bottom-color:var(--ora);}
+/* User cards grid */
+.user-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:16px;}
+.user-card{background:var(--white);border:2px solid var(--border);border-radius:var(--r);padding:16px 10px;text-align:center;cursor:pointer;transition:all .15s;position:relative;}
+.user-card:hover{border-color:var(--ora);transform:translateY(-2px);box-shadow:var(--shm);}
+.user-card.sel{border-color:var(--ora);background:var(--ora-lt);}
+.user-card-av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;margin:0 auto 8px;font-family:'Fraunces',serif;}
+.user-card-name{font-size:13px;font-weight:600;color:var(--ink);}
+.user-card-role{font-size:10.5px;color:var(--ink4);margin-top:2px;}
+.user-card-add{border:2px dashed var(--border2);background:transparent;color:var(--ink4);}
+.user-card-add:hover{border-color:var(--ora);color:var(--ora);background:var(--ora-lt);}
+/* Login panel */
+.auth-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:20px;box-shadow:var(--sh);}
+.auth-panel-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 .auth-err{background:var(--red-lt);color:var(--red);border-radius:var(--rs);padding:8px 11px;font-size:12px;margin-bottom:10px;display:none;}
 .auth-err.show{display:block;}
-.auth-ok{background:var(--grn-lt);color:var(--grn);border-radius:var(--rs);padding:8px 11px;font-size:12px;margin-bottom:10px;display:none;}
-.auth-ok.show{display:block;}
+/* New user form */
+#new-user-form{display:none;}
+#new-user-form.show{display:block;}
 
 /* SIDEBAR */
 #sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:var(--sb);display:flex;flex-direction:column;z-index:100;}
@@ -440,6 +451,124 @@ body{background:var(--bg);color:var(--ink);font-family:'Outfit',sans-serif;font-
 /* TOAST */
 #toast{position:fixed;bottom:18px;right:18px;z-index:300;background:var(--ink);color:#fff;border-radius:var(--r);padding:9px 15px;font-size:13px;font-weight:500;display:none;box-shadow:0 6px 20px rgba(0,0,0,.18);}
 #toast.show{display:block;animation:fu .15s ease;}
+
+/* ══════════════════════════════════════════
+   HAMBURGER + SIDEBAR OVERLAY
+══════════════════════════════════════════ */
+#hamburger{display:none;width:36px;height:36px;background:none;border:1px solid var(--border2);border-radius:var(--rs);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;flex-shrink:0;padding:0;}
+#hamburger span{display:block;width:15px;height:1.5px;background:var(--ink2);border-radius:2px;}
+#sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;}
+#sb-overlay.show{display:block;}
+
+/* ══════════════════════════════════════════
+   MOBILE RESPONSIVE  ≤ 768px
+══════════════════════════════════════════ */
+@media(max-width:768px){
+  /* Hamburger visible, sidebar slides */
+  #hamburger{display:flex;}
+  #sidebar{transform:translateX(-100%);transition:transform .22s ease;}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0;}
+
+  /* Topbar */
+  #topbar{padding:0 14px;gap:8px;}
+  .tb-title{font-size:14px;}
+  .save-ind{display:none;}
+  #topbar>.btn-ghost{display:none;}
+
+  /* Pages */
+  .page{padding:14px 12px;}
+
+  /* Stats: 2×2 */
+  .stat-row{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+  .sc-num{font-size:22px;}
+  .sc{padding:12px 13px;}
+
+  /* Section header */
+  .sec-hd{flex-direction:column;align-items:flex-start;gap:8px;}
+  .filter-row{flex-wrap:wrap;}
+  .fb{font-size:11px;padding:3px 9px;}
+
+  /* Cards: 1 col */
+  #grid{grid-template-columns:1fr;}
+
+  /* Workload section: stack */
+  .wl-sec{grid-template-columns:1fr;}
+  .gantt-hd,.gantt-row{display:none;}
+  #gantt::before{content:'📊 甘特圖於桌面版顯示';font-size:12px;color:var(--ink4);display:block;padding:8px 0;}
+
+  /* Calendar */
+  .cal-wrap{grid-template-columns:1fr;}
+  .cal-side{display:none;}
+  .cal-cell{min-height:54px;padding:3px;}
+  .cal-dn{font-size:9px;}
+  .cal-ev{font-size:8px;padding:1px 3px;}
+  .cal-nav{flex-wrap:wrap;gap:6px;}
+  .cal-ttl{font-size:13px;min-width:0;}
+  .cal-tabs{flex-wrap:wrap;}
+  .ctab{font-size:10.5px;padding:3px 8px;}
+  .wm-chip small{display:none;}
+  .wm-chip{padding:3px 8px;font-size:10px;}
+
+  /* Detail page */
+  .det-hd{flex-direction:column;padding:14px;}
+  .det-name{font-size:17px;}
+  .det-right{flex-direction:row;align-items:center;flex-wrap:wrap;gap:10px;}
+  .big-pct{font-size:26px;}
+  .bpb{width:110px;}
+
+  /* Tabs: scroll */
+  .tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .tab{white-space:nowrap;padding:8px 11px;font-size:12px;}
+
+  /* Notes: single col */
+  .notes-wrap{grid-template-columns:1fr;}
+  .notes-side{display:none;}
+
+  /* Two-col: stack */
+  .two-col{grid-template-columns:1fr;}
+
+  /* Phase header */
+  .phase-hd{flex-wrap:wrap;gap:6px;padding:10px 12px;}
+  .ph-dates{display:none;}
+  .ph-prog{margin-left:auto;}
+
+  /* Task table: hide less important cols */
+  .task-tbl th:nth-child(3),.task-tbl td:nth-child(3),
+  .task-tbl th:nth-child(4),.task-tbl td:nth-child(4),
+  .task-tbl th:nth-child(6),.task-tbl td:nth-child(6){display:none;}
+  .tname{font-size:12px;}
+
+  /* Modals: bottom sheet */
+  .modal-bg{align-items:flex-end;}
+  .modal{width:100%!important;max-width:100%!important;max-height:90vh;border-radius:16px 16px 0 0;position:fixed;bottom:0;left:0;right:0;}
+
+  /* Auth screen */
+  .auth-wrap{width:100%;padding:0 14px;}
+  .user-grid{grid-template-columns:repeat(3,1fr);gap:8px;}
+  .user-card{padding:12px 8px;}
+  .user-card-av{width:36px;height:36px;font-size:14px;}
+  .user-card-name{font-size:11px;}
+
+  /* Presentation */
+  .pres-topbar{padding:0 10px;gap:5px;}
+  .pres-title{font-size:12px;}
+  .pres-btn{padding:4px 8px;font-size:10.5px;}
+  .pres-controls .pres-btn:first-child{display:none;}
+  .slide-cover{padding:28px 22px;min-height:auto;}
+  .slide-cover-title{font-size:24px;}
+  .slide-body{padding:22px 18px;min-height:auto;}
+  .slide-h{font-size:19px;margin-bottom:16px;}
+  .slide-grid-2,.slide-grid-3{grid-template-columns:1fr;}
+}
+
+@media(max-width:480px){
+  .stat-row{grid-template-columns:1fr 1fr;}
+  .cal-cell{min-height:40px;}
+  .cal-ev{display:none;}
+  .user-grid{grid-template-columns:repeat(3,1fr);}
+  .page{padding:12px 10px;}
+}
 </style>
 </head>
 <body>
@@ -467,26 +596,79 @@ body{background:var(--bg);color:var(--ink);font-family:'Outfit',sans-serif;font-
 
 <!-- AUTH -->
 <div id="auth-screen">
-<div class="auth-box">
+<div class="auth-wrap">
   <div class="auth-logo">
     <div class="auth-mark"><svg fill="none" stroke="#fff" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
     <div class="auth-brand">ProjectOS<small>Project Manager</small></div>
   </div>
-  <div class="auth-tabs">
-    <div class="auth-tab act" onclick="authTab('login',this)">登入</div>
-    <div class="auth-tab" onclick="authTab('register',this)">建立帳號</div>
+
+  <!-- 使用者選擇卡片 -->
+  <div id="user-grid-wrap">
+    <div style="font-size:12.5px;color:var(--ink3);text-align:center;margin-bottom:14px">選擇使用者，或新增成員</div>
+    <div class="user-grid" id="user-grid">
+      <!-- 動態載入 -->
+      <div class="user-card user-card-add" onclick="showNewUserForm()">
+        <div style="font-size:28px;margin-bottom:6px">＋</div>
+        <div class="user-card-name" style="color:inherit">新增成員</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:8px">
+      <button class="btn btn-ghost btn-sm" onclick="resetConfig()" style="font-size:11px;color:var(--ink4)">⚙️ 重新設定 Supabase 連線</button>
+    </div>
   </div>
-  <div class="auth-err" id="auth-err"></div>
-  <div class="auth-ok" id="auth-ok"></div>
-  <div class="fg" id="reg-name-fg" style="display:none"><label>顯示名稱</label><input id="auth-name" placeholder="e.g. 昱辰"></div>
-  <div class="fg"><label>Email</label><input id="auth-email" type="email" placeholder="yourname@company.com" onkeydown="if(event.key==='Enter')doAuth()"></div>
-  <div class="fg"><label>密碼</label><input id="auth-pw" type="password" placeholder="至少 6 個字元" onkeydown="if(event.key==='Enter')doAuth()"></div>
-  <button class="btn btn-primary" style="width:100%;justify-content:center;padding:10px" id="auth-btn" onclick="doAuth()">登入</button>
-  <div style="margin-top:10px;text-align:center">
-    <button class="btn btn-ghost btn-sm" onclick="resetConfig()" style="font-size:11px;color:var(--ink4)">重新設定 Supabase 連線</button>
+
+  <!-- 登入面板（選擇使用者後顯示） -->
+  <div class="auth-panel" id="login-panel" style="display:none">
+    <div class="auth-panel-title">
+      <div id="login-av" style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff">?</div>
+      <span id="login-name-label">登入</span>
+    </div>
+    <div class="auth-err" id="auth-err"></div>
+    <div class="fg" style="margin-bottom:10px">
+      <label style="font-size:11.5px;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px">密碼</label>
+      <input id="auth-pw" type="password" placeholder="輸入密碼"
+        style="width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--rs);padding:8px 10px;color:var(--ink);font-family:'Outfit',sans-serif;font-size:13px;outline:none;"
+        onfocus="this.style.borderColor='var(--ora)'" onblur="this.style.borderColor='var(--border)'"
+        onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-ghost" style="flex:1" onclick="backToGrid()">← 返回</button>
+      <button class="btn btn-primary" style="flex:1;justify-content:center" id="auth-btn" onclick="doLogin()">登入</button>
+    </div>
+  </div>
+
+  <!-- 新增成員面板 -->
+  <div class="auth-panel" id="new-user-panel" style="display:none">
+    <div class="auth-panel-title">👤 新增團隊成員</div>
+    <div class="auth-err" id="reg-err"></div>
+    <div class="fg" style="margin-bottom:10px">
+      <label style="font-size:11.5px;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px">顯示名稱 *</label>
+      <input id="reg-name" placeholder="e.g. 昱辰"
+        style="width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--rs);padding:8px 10px;color:var(--ink);font-family:'Outfit',sans-serif;font-size:13px;outline:none;"
+        onfocus="this.style.borderColor='var(--ora)'" onblur="this.style.borderColor='var(--border)'">
+    </div>
+    <div class="fg" style="margin-bottom:10px">
+      <label style="font-size:11.5px;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px">設定密碼 * （至少 6 碼）</label>
+      <input id="reg-pw" type="password" placeholder="設定登入密碼"
+        style="width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--rs);padding:8px 10px;color:var(--ink);font-family:'Outfit',sans-serif;font-size:13px;outline:none;"
+        onfocus="this.style.borderColor='var(--ora)'" onblur="this.style.borderColor='var(--border)'"
+        onkeydown="if(event.key==='Enter')doRegister()">
+    </div>
+    <div class="fg" style="margin-bottom:14px">
+      <label style="font-size:11.5px;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px">頭像顏色</label>
+      <div id="reg-cp" class="cp-wrap" style="margin-top:4px"></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-ghost" style="flex:1" onclick="backToGrid()">← 返回</button>
+      <button class="btn btn-primary" style="flex:1;justify-content:center" id="reg-btn" onclick="doRegister()">建立帳號</button>
+    </div>
+    <p style="font-size:11px;color:var(--ink4);text-align:center;margin-top:10px">帳號格式：名稱@team.pos（自動產生，無需 email 驗證）</p>
   </div>
 </div>
 </div>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div id="sb-overlay" onclick="closeSidebar()"></div>
 
 <!-- SIDEBAR -->
 <nav id="sidebar" style="display:none">
@@ -537,6 +719,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Outfit',sans-serif;font-
 <!-- MAIN -->
 <div id="main" style="display:none">
   <header id="topbar">
+    <button id="hamburger" onclick="toggleSidebar()" aria-label="選單">
+      <span></span><span></span><span></span>
+    </button>
     <div class="tb-title" id="pg-title">大盤總覽</div>
     <div class="save-ind" id="save-ind">✓ 已同步</div>
     <button class="btn btn-ghost btn-sm" onclick="loadAll()">
@@ -836,11 +1021,8 @@ let currentUser=null, currentProfile=null;
 let projects=[], calEvents=[], teamProjects=[];
 let curFilter='all', curProjId=null, pendingPhaseId=null, pendingTaskId=null;
 let npTpl='blank', npColor=PALETTE[0];
-let tkColor=PALETTE[5];
-let ceColor=PALETTE[5];
-let qeColor=PALETTE[5], qeType='personal';
+let tkColor=PALETTE[5], ceColor=PALETTE[5], qeColor=PALETTE[5], qeType='personal';
 let calY=new Date().getFullYear(), calM=new Date().getMonth(), calTab='personal';
-let authMode='login';
 
 /* ══════════════════════════════════════════════
    COLOR PICKER
@@ -944,45 +1126,142 @@ async function loadProfileAndShow(){
 }
 
 /* ══════════════════════════════════════════════
-   AUTH
+   AUTH — 使用者切換模式
+   email 格式：名稱@team.pos（自動產生，不需驗證）
 ══════════════════════════════════════════════ */
-function authTab(mode,el){
-  authMode=mode;
-  document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('act')); el.classList.add('act');
-  $('auth-btn').textContent=mode==='login'?'登入':'建立帳號';
-  $('reg-name-fg').style.display=mode==='register'?'block':'none';
-  $('auth-err').classList.remove('show'); $('auth-ok').classList.remove('show');
+let selectedUserEmail='', selectedUserName='', selectedUserColor='';
+let regColor=PALETTE[0];
+const nameToEmail = name => name.trim().toLowerCase().replace(/\s+/g,'_')+'@team.pos';
+
+// 初始化：載入所有已知使用者卡片（從 localStorage 快取）
+function initUserGrid(){
+  const saved=JSON.parse(localStorage.getItem('pos_users')||'[]');
+  renderUserGrid(saved);
+  // 如果有 Supabase，也從 profiles 同步
+  if(sb) syncUsersFromProfiles();
 }
 
-async function doAuth(){
-  const email=$('auth-email').value.trim(), pw=$('auth-pw').value;
-  if(!email||!pw){showAErr('請填入 Email 和密碼');return;}
-  $('auth-btn').disabled=true; $('auth-btn').textContent='處理中...';
+async function syncUsersFromProfiles(){
   try{
-    if(authMode==='login'){
-      const {error}=await sb.auth.signInWithPassword({email,password:pw});
-      if(error)throw error;
-    }else{
-      const name=$('auth-name').value.trim()||email.split('@')[0];
-      const {data,error}=await sb.auth.signUp({email,password:pw,options:{data:{display_name:name}}});
-      if(error)throw error;
-      if(!data.session){ // email confirm required
-        $('auth-ok').textContent='✅ 已寄出驗證信，請至信箱確認後再登入';
-        $('auth-ok').classList.add('show');
-        $('auth-btn').disabled=false; $('auth-btn').textContent='建立帳號'; return;
-      }
+    const {data}=await sb.from('profiles').select('id,display_name,avatar_color');
+    if(!data||!data.length)return;
+    const users=data.map(p=>({name:p.display_name,color:p.avatar_color||PALETTE[0]}));
+    localStorage.setItem('pos_users',JSON.stringify(users));
+    renderUserGrid(users);
+  }catch(e){}
+}
+
+function renderUserGrid(users){
+  const grid=$('user-grid');
+  const addCard=`<div class="user-card user-card-add" onclick="showNewUserForm()">
+    <div style="font-size:28px;margin-bottom:6px">＋</div>
+    <div class="user-card-name" style="color:inherit">新增成員</div>
+  </div>`;
+  if(!users.length){ grid.innerHTML=addCard; return; }
+  grid.innerHTML=users.map(u=>`
+    <div class="user-card" onclick="selectUser('${u.name}','${u.color||PALETTE[0]}')" >
+      <div class="user-card-av" style="background:${u.color||PALETTE[0]}">${u.name[0].toUpperCase()}</div>
+      <div class="user-card-name">${u.name}</div>
+    </div>`).join('')+addCard;
+}
+
+function selectUser(name,color){
+  selectedUserName=name; selectedUserEmail=nameToEmail(name); selectedUserColor=color;
+  $('user-grid-wrap').style.display='none';
+  $('new-user-panel').style.display='none';
+  $('login-panel').style.display='block';
+  $('login-av').textContent=name[0].toUpperCase();
+  $('login-av').style.background=color;
+  $('login-name-label').textContent=name+' 登入';
+  $('auth-pw').value=''; $('auth-pw').focus();
+  $('auth-err').classList.remove('show');
+}
+
+function backToGrid(){
+  $('user-grid-wrap').style.display='block';
+  $('login-panel').style.display='none';
+  $('new-user-panel').style.display='none';
+}
+
+function showNewUserForm(){
+  $('user-grid-wrap').style.display='none';
+  $('login-panel').style.display='none';
+  $('new-user-panel').style.display='block';
+  regColor=PALETTE[Math.floor(Math.random()*PALETTE.length)];
+  renderCP('reg-cp',regColor,c=>{regColor=c;});
+  $('reg-name').value=''; $('reg-pw').value='';
+  $('reg-err').classList.remove('show');
+  $('reg-name').focus();
+}
+
+async function doLogin(){
+  const pw=$('auth-pw').value;
+  if(!pw){showAErr('請輸入密碼');return;}
+  $('auth-btn').disabled=true; $('auth-btn').textContent='登入中...';
+  try{
+    const {error}=await sb.auth.signInWithPassword({email:selectedUserEmail,password:pw});
+    if(error) throw error;
+  }catch(e){
+    showAErr(e.message==='Invalid login credentials'?'密碼錯誤，請重新輸入':e.message);
+  }
+  $('auth-btn').disabled=false; $('auth-btn').textContent='登入';
+}
+
+async function doRegister(){
+  const name=$('reg-name').value.trim(), pw=$('reg-pw').value;
+  if(!name){showRegErr('請輸入顯示名稱');return;}
+  if(pw.length<6){showRegErr('密碼至少 6 個字元');return;}
+  $('reg-btn').disabled=true; $('reg-btn').textContent='建立中...';
+  const email=nameToEmail(name);
+  try{
+    // 先嘗試直接登入（帳號可能已存在）
+    const {data:loginData,error:loginErr}=await sb.auth.signInWithPassword({email,password:pw});
+    if(!loginErr&&loginData.session){
+      // 登入成功（帳號已存在）
+      $('reg-btn').disabled=false; $('reg-btn').textContent='建立帳號';
+      return;
     }
-  }catch(e){ showAErr(e.message); }
-  $('auth-btn').disabled=false; $('auth-btn').textContent=authMode==='login'?'登入':'建立帳號';
+    // 建立新帳號
+    const {data,error}=await sb.auth.signUp({
+      email,password:pw,
+      options:{data:{display_name:name,avatar_color:regColor}}
+    });
+    if(error) throw error;
+    if(data.user&&!data.session){
+      // 需要 email 驗證 → 改用 admin bypass 或提示
+      showRegErr('請到 Supabase → Authentication → Settings → 關閉「Confirm email」後再試');
+      $('reg-btn').disabled=false; $('reg-btn').textContent='建立帳號'; return;
+    }
+    // 更新 profile 顏色
+    if(data.user){
+      await sb.from('profiles').upsert({id:data.user.id,display_name:name,avatar_color:regColor},{onConflict:'id'});
+    }
+    // 快取到 localStorage
+    const saved=JSON.parse(localStorage.getItem('pos_users')||'[]');
+    if(!saved.find(u=>u.name===name)) saved.push({name,color:regColor});
+    localStorage.setItem('pos_users',JSON.stringify(saved));
+  }catch(e){
+    showRegErr(e.message);
+  }
+  $('reg-btn').disabled=false; $('reg-btn').textContent='建立帳號';
 }
 
 function showAErr(msg){ $('auth-err').textContent=msg; $('auth-err').classList.add('show'); }
-function showAuthScreen(){ $('loading').classList.add('hide'); $('auth-screen').classList.remove('hide'); $('sidebar').style.display='none'; $('main').style.display='none'; }
+function showRegErr(msg){ $('reg-err').textContent=msg; $('reg-err').classList.add('show'); }
+
+function showAuthScreen(){
+  $('loading').classList.add('hide');
+  $('auth-screen').classList.remove('hide');
+  $('sidebar').style.display='none';
+  $('main').style.display='none';
+  backToGrid();
+  initUserGrid();
+}
 
 async function doLogout(){
-  if(!confirm('確定要登出？可切換其他帳號'))return;
-  if(!demoMode)await sb.auth.signOut();
-  else{ localStorage.removeItem(LS_DEMO); }
+  if(!confirm('確定要登出？可切換其他使用者'))return;
+  if(!demoMode) await sb.auth.signOut();
+  else localStorage.removeItem(LS_DEMO);
   toast('👋 已登出');
   location.reload();
 }
@@ -995,7 +1274,10 @@ function showApp(user,profile){
   const color=profile?.avatar_color||PALETTE[0];
   $('sb-av').textContent=name[0].toUpperCase(); $('sb-av').style.background=color;
   $('sb-uname').textContent=name;
-  $('sb-email-txt').textContent=demoMode?'示範模式':(user?.email||'');
+  $('sb-email-txt').textContent=demoMode?'示範模式':'@team.pos';
+  // 更新本地快取
+  const saved=JSON.parse(localStorage.getItem('pos_users')||'[]');
+  if(!saved.find(u=>u.name===name)){ saved.push({name,color}); localStorage.setItem('pos_users',JSON.stringify(saved)); }
 }
 
 /* ══════════════════════════════════════════════
@@ -2814,6 +3096,21 @@ function toast(msg){
   const t=$('toast'); t.textContent=msg; t.classList.add('show');
   clearTimeout(_tt); _tt=setTimeout(()=>t.classList.remove('show'),3500);
 }
+
+/* ── MOBILE SIDEBAR TOGGLE ── */
+function toggleSidebar(){
+  const sb=$('sidebar'), ov=$('sb-overlay');
+  const isOpen=sb.classList.toggle('open');
+  if(ov) ov.classList.toggle('show', isOpen);
+}
+function closeSidebar(){
+  const sb=$('sidebar'), ov=$('sb-overlay');
+  if(sb) sb.classList.remove('open');
+  if(ov) ov.classList.remove('show');
+}
+document.addEventListener('click',e=>{
+  if(e.target.closest('.sb-it')&&window.innerWidth<=768) closeSidebar();
+});
 </script>
 </body>
 </html>
